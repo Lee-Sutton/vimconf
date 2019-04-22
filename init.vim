@@ -48,6 +48,8 @@ nnoremap <Leader>f :BLines<CR>
 nnoremap <Leader>g :Ag<CR>
 nnoremap <Leader>e :NERDTreeToggle<CR>
 nnoremap <Leader>a :NERDTreeFind<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>w :w<CR>
 
 
 " Enable Elite mode, No ARRRROWWS!!!!

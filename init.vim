@@ -37,6 +37,8 @@ set tabstop=4
 set shiftwidth=4
 set smarttab
 set expandtab
+set ignorecase
+set smartcase
 
 " Mappings
 let mapleader = "\<Space>"
@@ -44,6 +46,9 @@ nnoremap <Leader>o :GFiles<CR>
 nnoremap <Leader>O :Files<CR>
 nnoremap <Leader>f :BLines<CR>
 nnoremap <Leader>g :Ag<CR>
+nnoremap <Leader>e :NERDTreeToggle<CR>
+nnoremap <Leader>a :NERDTreeFind<CR>
+
 
 " Enable Elite mode, No ARRRROWWS!!!!
 let g:elite_mode=1

@@ -13,7 +13,14 @@ call plug#begin('~/.config/nvim/_plugins')
 
   " Misc plugins
   Plug 'tpope/vim-sensible'
+  Plug 'tpope/vim-fugitive'
+  Plug 'scrooloose/nerdtree'
+  Plug '/usr/local/opt/fzf'
+  Plug 'junegunn/fzf.vim'
 call plug#end()
 
+" Deoplete config
 let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog = '/Users/leesutton/neovim/bin/python'
+
+let mapleader = "\<Space>"

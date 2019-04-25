@@ -10,6 +10,7 @@ call plug#begin('~/.config/nvim/_plugins')
 
   " Deoplete plugins
   Plug 'deoplete-plugins/deoplete-jedi'
+  Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 
   " utility plugins
   Plug 'tpope/vim-sensible'
@@ -22,17 +23,32 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'w0rp/ale'
   Plug 'tpope/vim-surround'
   Plug 'sheerun/vim-polyglot'
+  Plug 'HerringtonDarkholme/yats.vim'
+  Plug 'ambv/black'
+  Plug 'ludovicchabant/vim-gutentags'
+  Plug 'heavenshell/vim-pydocstring'
+  Plug 'mtth/scratch.vim'
+
+  " colorscheme
+  Plug 'sonph/onehalf', {'rtp': 'vim/'}
 call plug#end()
+
+
+" colorscheme config
+colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
 
 " Deoplete config
 let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog = '/Users/leesutton/neovim/bin/python'
+let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
 
 " Show linenumbers
 set number
 set ruler
 
 " Set Proper Tabs
+autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 set tabstop=4
 set shiftwidth=4
 set smarttab
@@ -50,6 +66,10 @@ nnoremap <Leader>e :NERDTreeToggle<CR>
 nnoremap <Leader>a :NERDTreeFind<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>w :w<CR>
+nnoremap <Leader>wq :wq<CR>
+nnoremap <Leader>s :Gstatus<CR>
+nnoremap <Leader>b :Black<CR>
+nnoremap gd <C>]
 
 
 " Enable Elite mode, No ARRRROWWS!!!!

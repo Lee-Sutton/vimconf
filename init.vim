@@ -28,6 +28,9 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'heavenshell/vim-pydocstring'
   Plug 'mtth/scratch.vim'
+  Plug 'kassio/neoterm'
+  Plug 'mindriot101/vim-yapf'
+  Plug 'airblade/vim-gitgutter'
 
   " colorscheme
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
@@ -55,6 +58,12 @@ set smarttab
 set expandtab
 set ignorecase
 set smartcase
+
+" better window movement
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " Mappings
 let mapleader = "\<Space>"

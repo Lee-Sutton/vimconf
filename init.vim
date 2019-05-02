@@ -65,19 +65,22 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Ag config to search for content only
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
 " Mappings
 let mapleader = "\<Space>"
 nnoremap <Leader>o :GFiles<CR>
 nnoremap <Leader>O :Files<CR>
 nnoremap <Leader>f :BLines<CR>
 nnoremap <Leader>g :Ag<CR>
+nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>e :NERDTreeToggle<CR>
 nnoremap <Leader>a :NERDTreeFind<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>wq :wq<CR>
 nnoremap <Leader>s :Gstatus<CR>
-nnoremap <Leader>b :Black<CR>
 nnoremap gd <C>]
 
 

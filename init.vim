@@ -10,7 +10,9 @@ call plug#begin('~/.config/nvim/_plugins')
 
   " Deoplete plugins
   Plug 'deoplete-plugins/deoplete-jedi'
-  Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+
+  " coc neovim
+  Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 
   " utility plugins
   Plug 'tpope/vim-sensible'
@@ -31,6 +33,9 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'kassio/neoterm'
   Plug 'mindriot101/vim-yapf'
   Plug 'airblade/vim-gitgutter'
+  Plug 'posva/vim-vue'
+  Plug 'SidOfc/mkdx'
+  Plug 'junegunn/goyo.vim'
 
   " colorscheme
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
@@ -41,6 +46,9 @@ call plug#end()
 colorscheme onehalfdark
 let g:airline_theme='onehalfdark'
 
+" NERDTree config
+let NERDTreeShowHidden=1
+
 " Deoplete config
 let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog = '/Users/leesutton/neovim/bin/python'
@@ -50,6 +58,9 @@ let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
 set number
 set ruler
 
+" copy to clipboard
+set clipboard=unnamed
+
 " Set Proper Tabs
 autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 set tabstop=4
@@ -58,6 +69,7 @@ set smarttab
 set expandtab
 set ignorecase
 set smartcase
+set wrap!
 
 " better window movement
 nnoremap <C-J> <C-W><C-J>
@@ -78,8 +90,19 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>wq :wq<CR>
 nnoremap <Leader>s :Gstatus<CR>
 nnoremap <Leader>b :Black<CR>
-nnoremap gd <C>]
+nmap <silent> <leader>dd <Plug>(coc-definition)
+nmap <silent> <leader>dr <Plug>(coc-references)
+nmap <silent> <leader>dj <Plug>(coc-implementation)
 
+" Markdown config
+let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
+                        \ 'map': { 'prefix': '<leader>', 'enable': 1 },
+                        \ 'enter': { 'shift': 1 },
+                        \ 'links': { 'external': { 'enable': 1 } },
+                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
+                        \ 'fold': { 'enable': 1 } }
+let g:polyglot_disabled = ['markdown'] " for vim-polyglot users, it loads Plasticboy's markdown
+                                       " plugin which unfortunately interferes with mkdx list indentation.
 
 " Enable Elite mode, No ARRRROWWS!!!!
 let g:elite_mode=1

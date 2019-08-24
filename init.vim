@@ -8,13 +8,19 @@ call plug#begin('~/.config/nvim/_plugins')
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
 
+  if has('nvim')
+  else
+    let g:black_virtualenv="~/.vim_black"
+  endif
+
   " Deoplete plugins
   Plug 'deoplete-plugins/deoplete-jedi'
 
   " coc neovim
-  Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+  " Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 
   " utility plugins
+  Plug 'Shougo/echodoc'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdtree'
@@ -26,7 +32,7 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'tpope/vim-surround'
   Plug 'sheerun/vim-polyglot'
   Plug 'HerringtonDarkholme/yats.vim'
-  Plug 'ambv/black'
+  Plug 'psf/black'
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'heavenshell/vim-pydocstring'
   Plug 'mtth/scratch.vim'
@@ -36,6 +42,7 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'posva/vim-vue'
   Plug 'SidOfc/mkdx'
   Plug 'junegunn/goyo.vim'
+  Plug 'mattn/emmet-vim'
 
   " colorscheme
   Plug 'sonph/onehalf', {'rtp': 'vim/'}

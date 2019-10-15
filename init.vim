@@ -20,6 +20,7 @@ call plug#begin('~/.config/nvim/_plugins')
   " Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 
   " utility plugins
+  Plug 'voldikss/vim-floaterm'
   Plug 'Shougo/echodoc'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
@@ -126,3 +127,8 @@ if get(g:, 'elite_mode')
     nnoremap <Left>  :vertical resize +2<CR>
     nnoremap <Right> :vertical resize -2<CR>
 endif
+
+" float term config
+noremap  <leader>t FloatermToggle<CR>i
+noremap! <leader>t <Esc>:FloatermToggle<CR>i
+tnoremap <leader>t <C-\><C-n>:FloatermToggle<CR>

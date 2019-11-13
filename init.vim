@@ -15,6 +15,8 @@ call plug#begin('~/.config/nvim/_plugins')
 
   " Deoplete plugins
   Plug 'deoplete-plugins/deoplete-jedi'
+  Plug 'slashmili/alchemist.vim'
+  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
   " coc neovim
   " Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
@@ -44,6 +46,9 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'SidOfc/mkdx'
   Plug 'junegunn/goyo.vim'
   Plug 'mattn/emmet-vim'
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
+
 
   " colorscheme
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
@@ -61,6 +66,15 @@ let NERDTreeShowHidden=1
 let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog = '/Users/leesutton/neovim/bin/python'
 let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
+
+" Ultisnips config
+let g:UltiSnipsExpandTrigger="<Leader>e"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" emmet config
+let g:user_emmet_expandabbr_key='<Tab>'
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " Show linenumbers
 set number
@@ -80,10 +94,10 @@ set smartcase
 set wrap!
 
 " better window movement
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 " Ag config to search for content only
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
@@ -107,6 +121,15 @@ nmap <silent> <leader>dd <Plug>(coc-definition)
 nmap <silent> <leader>dr <Plug>(coc-references)
 nmap <silent> <leader>dj <Plug>(coc-implementation)
 
+" float term config
+nnoremap <F12> :FloatermToggle<CR>i
+tnoremap <F12> <C-\><C-n>:FloatermToggle<CR>
+
+tnoremap <C-W><C-J> <C-\><C-n><C-W><C-J>
+tnoremap <C-W><C-K> <C-\><C-n><C-W><C-K>
+tnoremap <C-W><C-L> <C-\><C-n><C-W><C-L>
+tnoremap <C-W><C-H> <C-\><C-n><C-W><C-H>
+
 " Markdown config
 let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
                         \ 'map': { 'prefix': '<leader>', 'enable': 1 },
@@ -128,7 +151,3 @@ if get(g:, 'elite_mode')
     nnoremap <Right> :vertical resize -2<CR>
 endif
 
-" float term config
-noremap  <leader>t FloatermToggle<CR>i
-noremap! <leader>t <Esc>:FloatermToggle<CR>i
-tnoremap <leader>t <C-\><C-n>:FloatermToggle<CR>

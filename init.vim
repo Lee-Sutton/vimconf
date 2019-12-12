@@ -48,6 +48,11 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'mattn/emmet-vim'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
+  Plug 'aaronbieber/vim-quicktask'
+  Plug 'vim-python/python-syntax'
+  Plug 'fisadev/vim-isort'
+  Plug 'xolox/vim-notes'
+  Plug 'xolox/vim-misc'
 
 
   " colorscheme
@@ -67,13 +72,15 @@ let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog = '/Users/leesutton/neovim/bin/python'
 let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
 
+" better python syntax highlight
+let g:python_highlight_all = 1
+
 " Ultisnips config
-let g:UltiSnipsExpandTrigger="<Leader>e"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" let g:UltiSnipsExpandTrigger="<Leader>e"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " emmet config
-let g:user_emmet_expandabbr_key='<Tab>'
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " Show linenumbers
@@ -115,15 +122,10 @@ nnoremap <Leader>q :q<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>wq :wq<CR>
 nnoremap <Leader>s :Gstatus<CR>
-nnoremap gd <C>]
+nnoremap <Leader>d :Gdiff<CR>
+set diffopt+=vertical
+nnoremap <Leader>j <C>]
 nnoremap <Leader>b :Black<CR>
-nmap <silent> <leader>dd <Plug>(coc-definition)
-nmap <silent> <leader>dr <Plug>(coc-references)
-nmap <silent> <leader>dj <Plug>(coc-implementation)
-
-" float term config
-nnoremap <F12> :FloatermToggle<CR>i
-tnoremap <F12> <C-\><C-n>:FloatermToggle<CR>
 
 tnoremap <C-W><C-J> <C-\><C-n><C-W><C-J>
 tnoremap <C-W><C-K> <C-\><C-n><C-W><C-K>
@@ -151,3 +153,54 @@ if get(g:, 'elite_mode')
     nnoremap <Right> :vertical resize -2<CR>
 endif
 
+
+" gutengtags config
+let g:gutentags_ctags_exclude = [
+      \ '*.git', '*.svg', '*.hg',
+      \ 'build',
+      \ 'dist',
+      \ '*sites/*/files/*',
+      \ 'bin',
+      \ 'node_modules',
+      \ 'bower_components',
+      \ 'cache',
+      \ 'compiled',
+      \ 'docs',
+      \ 'example',
+      \ 'bundle',
+      \ 'vendor',
+      \ '*.md',
+      \ '*.html',
+      \ '*.rst',
+      \ '*-lock.json',
+      \ '*.lock',
+      \ '*bundle*.js',
+      \ '*build*.js',
+      \ '.*rc*',
+      \ '*.json',
+      \ '*.min.*',
+      \ '*.map',
+      \ '*.bak',
+      \ '*.zip',
+      \ '*.pyc',
+      \ '*/__pycache__/*',
+      \ '*.class',
+      \ '*.sln',
+      \ '*.Master',
+      \ '*.csproj',
+      \ '*.tmp',
+      \ '*.csproj.user',
+      \ '*.cache',
+      \ '*.pdb',
+      \ 'tags*',
+      \ 'cscope.*',
+      \ '*.css',
+      \ '*.less',
+      \ '*.scss',
+      \ '*.exe', '*.dll',
+      \ '*.mp3', '*.ogg', '*.flac',
+      \ '*.swp', '*.swo',
+      \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+      \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+      \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
+      \ ]

@@ -17,9 +17,11 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'deoplete-plugins/deoplete-jedi'
   Plug 'slashmili/alchemist.vim'
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+  Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 
   " coc neovim
   " Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+
 
   " utility plugins
   Plug 'voldikss/vim-floaterm'
@@ -38,6 +40,7 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'psf/black'
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'heavenshell/vim-pydocstring'
+  Plug 'heavenshell/vim-jsdoc'
   Plug 'mtth/scratch.vim'
   Plug 'kassio/neoterm'
   Plug 'mindriot101/vim-yapf'
@@ -59,6 +62,10 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
 call plug#end()
 
+" ale config
+let g:ale_fixers = ['eslint']
+let g:jsdoc_enable_es6=1
+
 
 " colorscheme config
 colorscheme onehalfdark
@@ -79,6 +86,7 @@ let g:python_highlight_all = 1
 " let g:UltiSnipsExpandTrigger="<Leader>e"
 " let g:UltiSnipsJumpForwardTrigger="<c-b>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:nvim_typescript#javascript_support = 1
 
 " emmet config
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")

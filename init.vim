@@ -51,7 +51,6 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'mattn/emmet-vim'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
-  Plug 'aaronbieber/vim-quicktask'
   Plug 'vim-python/python-syntax'
   Plug 'fisadev/vim-isort'
   Plug 'xolox/vim-notes'
@@ -60,10 +59,10 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'pangloss/vim-javascript'
   Plug 'simonsmith/material.vim'
 
-
   " colorscheme
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
 call plug#end()
+
 
 " ale config
 let g:ale_fixers = ['eslint']
@@ -75,7 +74,6 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-" colorscheme onehalfdark
 set background=dark
 colorscheme material
 let g:airline_theme='material'
@@ -86,7 +84,6 @@ set cursorline
 let NERDTreeShowHidden=1
 
 let NERDTreeIgnore=['__pycache__', 'node_modules']
-" let NERDTreeIgnore = ['\.pyc$', '\node_modules$', '\__pycache__$']
 
 " Deoplete config
 let g:deoplete#enable_at_startup = 1
@@ -95,6 +92,9 @@ let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
 
 " better python syntax highlight
 let g:python_highlight_all = 1
+
+" notes
+let g:notes_directories = ["~/notes/"]
 
 " Ultisnips config
 " let g:UltiSnipsExpandTrigger="<Leader>e"
@@ -143,13 +143,16 @@ set wrap!
 
 " Ag config to search for content only
 command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
 " Mappings
 let mapleader = "\<Space>"
 nnoremap <Leader>o :GFiles<CR>
 nnoremap <Leader>O :Files<CR>
+nnoremap <Leader>t :Tags<CR>
 nnoremap <Leader>f :BLines<CR>
 nnoremap <Leader>g :Ag<CR>
+nnoremap <Leader>G :Rg<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>e :NERDTreeToggle<CR>
 nnoremap <Leader>a :NERDTreeFind<CR>
@@ -161,6 +164,8 @@ nnoremap <Leader>d :Gdiff<CR>
 set diffopt+=vertical
 nnoremap <Leader>j <C>]
 nnoremap <Leader>b :Black<CR>
+
+nnoremap <Leader>r :source ~/.config/nvim/init.vim<CR>
 
 tnoremap <C-W><C-J> <C-\><C-n><C-W><C-J>
 tnoremap <C-W><C-K> <C-\><C-n><C-W><C-K>

@@ -31,6 +31,7 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'scrooloose/nerdtree'
   Plug '/usr/local/opt/fzf'
   Plug 'junegunn/fzf.vim'
+  Plug 'mhinz/vim-grepper'
   Plug 'vim-airline/vim-airline'
   Plug 'Townk/vim-autoclose'
   Plug 'w0rp/ale'
@@ -79,6 +80,10 @@ colorscheme material
 let g:airline_theme='material'
 let g:material_terminal_italics = 1
 set cursorline
+
+set hlsearch
+hi Search ctermbg=LightGrey
+hi Search ctermfg=Black
 
 " NERDTree config
 let NERDTreeShowHidden=1
@@ -152,7 +157,8 @@ nnoremap <Leader>O :Files<CR>
 nnoremap <Leader>t :Tags<CR>
 nnoremap <Leader>f :BLines<CR>
 nnoremap <Leader>g :Ag<CR>
-nnoremap <Leader>G :Rg<CR>
+nnoremap <Leader>G :Ag <C-R><C-W><CR>
+nnoremap <Leader>r :Rg<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>e :NERDTreeToggle<CR>
 nnoremap <Leader>a :NERDTreeFind<CR>
@@ -161,16 +167,35 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>wq :wq<CR>
 nnoremap <Leader>s :Gstatus<CR>
 nnoremap <Leader>d :Gdiff<CR>
+nnoremap <Leader><Leader> :
 set diffopt+=vertical
 nnoremap <Leader>j <C>]
 nnoremap <Leader>b :Black<CR>
 
-nnoremap <Leader>r :source ~/.config/nvim/init.vim<CR>
+nnoremap <Leader>rf :source ~/.config/nvim/init.vim<CR>
 
 tnoremap <C-W><C-J> <C-\><C-n><C-W><C-J>
 tnoremap <C-W><C-K> <C-\><C-n><C-W><C-K>
 tnoremap <C-W><C-L> <C-\><C-n><C-W><C-L>
 tnoremap <C-W><C-H> <C-\><C-n><C-W><C-H>
+
+" .............................................................................
+" mhinz/vim-grepper
+" .............................................................................
+
+let g:grepper={}
+let g:grepper.tools=["rg"]
+
+xmap gr <plug>(GrepperOperator)
+
+" After searching for text, press this mapping to do a project wide find and
+" replace. It's similar to <leader>r except this one applies to all matches
+" across all files instead of just the current file.
+nnoremap <Leader>R
+  \ :let @s='\<'.expand('<cword>').'\>'<CR>
+  \ :Grepper -cword -noprompt<CR>
+  \ :cfdo %s/<C-r>s//g \| update
+  \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " Markdown config
 let g:mkdx#settings     = { 'highlight': { 'enable': 1 },

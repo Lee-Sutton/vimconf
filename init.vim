@@ -24,6 +24,7 @@ call plug#begin('~/.config/nvim/_plugins')
 
 
   " utility plugins
+  Plug 'liuchengxu/vim-which-key'
   Plug 'voldikss/vim-floaterm'
   Plug 'Shougo/echodoc'
   Plug 'tpope/vim-sensible'
@@ -59,6 +60,7 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'liuchengxu/vista.vim'
   Plug 'pangloss/vim-javascript'
   Plug 'simonsmith/material.vim'
+  Plug 'jmcantrell/vim-virtualenv'
 
   " colorscheme
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
@@ -68,6 +70,10 @@ call plug#end()
 " ale config
 let g:ale_fixers = ['eslint']
 let g:jsdoc_enable_es6=1
+" Run both javascript and vue linters for vue files.
+let b:ale_linter_aliases = ['javascript', 'vue']
+" Select the eslint and vls linters.
+let b:ale_linters = ['eslint', 'vls']
 
 
 " colorscheme config
@@ -81,9 +87,11 @@ let g:airline_theme='material'
 let g:material_terminal_italics = 1
 set cursorline
 
-set hlsearch
-hi Search ctermbg=LightGrey
-hi Search ctermfg=Black
+" WhichKey config
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ','
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
 " NERDTree config
 let NERDTreeShowHidden=1
@@ -98,14 +106,19 @@ let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
 " better python syntax highlight
 let g:python_highlight_all = 1
 
+" virtualenv activation
+let g:virtualenv_directory = '~/Library/Caches/pypoetry/virtualenvs/'
+
 " notes
 let g:notes_directories = ["~/notes/"]
 
 " Ultisnips config
-" let g:UltiSnipsExpandTrigger="<Leader>e"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:nvim_typescript#javascript_support = 1
+let g:nvim_typescript#vue_support = 1
+let g:nvim_typescript#type_info_on_hold = 1
 let g:javascript_plugin_jsdoc = 1
 " let g:javascript_conceal_function             = "ƒ"
 " let g:javascript_conceal_null                 = "ø"
@@ -152,27 +165,31 @@ command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, {'option
 
 " Mappings
 let mapleader = "\<Space>"
+nnoremap <Leader>s :wa<CR>
 nnoremap <Leader>o :GFiles<CR>
 nnoremap <Leader>O :Files<CR>
 nnoremap <Leader>t :Tags<CR>
-nnoremap <Leader>f :BLines<CR>
-nnoremap <Leader>g :Ag<CR>
-nnoremap <Leader>G :Ag <C-R><C-W><CR>
+nnoremap <Leader>T :Tags <C-R><C-W><CR>
+nnoremap <Leader>b :BLines<CR>
+nnoremap <Leader>f :Ag<CR>
+nnoremap <Leader>F :Ag <C-R><C-W><CR>
 nnoremap <Leader>r :Rg<CR>
-nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>e :NERDTreeToggle<CR>
 nnoremap <Leader>a :NERDTreeFind<CR>
 nnoremap <Leader>q :q<CR>
-nnoremap <Leader>w :w<CR>
 nnoremap <Leader>wq :wq<CR>
-nnoremap <Leader>s :Gstatus<CR>
-nnoremap <Leader>d :Gdiff<CR>
+nnoremap <Leader>g :Gstatus<CR>
+nnoremap <Leader>l :ALEFix<CR>
 nnoremap <Leader><Leader> :
+nnoremap gd <C-]>
 set diffopt+=vertical
-nnoremap <Leader>j <C>]
-nnoremap <Leader>b :Black<CR>
+
+nnoremap <Leader>j <C-d>
+nnoremap <Leader>k <C-u>
+nnoremap <Leader>w <C-w>
 
 nnoremap <Leader>rf :source ~/.config/nvim/init.vim<CR>
+:imap jj <Esc>
 
 tnoremap <C-W><C-J> <C-\><C-n><C-W><C-J>
 tnoremap <C-W><C-K> <C-\><C-n><C-W><C-K>
@@ -248,6 +265,7 @@ let g:gutentags_ctags_exclude = [
       \ '*.bak',
       \ '*.zip',
       \ '*.pyc',
+      \ '*.ipynb',
       \ '*/__pycache__/*',
       \ '*.class',
       \ '*.sln',

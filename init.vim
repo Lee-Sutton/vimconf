@@ -24,11 +24,12 @@ call plug#begin('~/.config/nvim/_plugins')
 
 
   " utility plugins
-  Plug 'liuchengxu/vim-which-key'
+  Plug 'psliwka/vim-smoothie'
   Plug 'voldikss/vim-floaterm'
   Plug 'Shougo/echodoc'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
+  Plug 'jreybert/vimagit'
   Plug 'scrooloose/nerdtree'
   Plug '/usr/local/opt/fzf'
   Plug 'junegunn/fzf.vim'
@@ -41,7 +42,8 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'psf/black'
   Plug 'ludovicchabant/vim-gutentags'
-  Plug 'heavenshell/vim-pydocstring'
+  Plug 'kkoomen/vim-doge'
+  Plug 'samoshkin/vim-mergetool'
   Plug 'heavenshell/vim-jsdoc'
   Plug 'mtth/scratch.vim'
   Plug 'kassio/neoterm'
@@ -60,7 +62,6 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'liuchengxu/vista.vim'
   Plug 'pangloss/vim-javascript'
   Plug 'simonsmith/material.vim'
-  Plug 'jmcantrell/vim-virtualenv'
 
   " colorscheme
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
@@ -75,6 +76,11 @@ let b:ale_linter_aliases = ['javascript', 'vue']
 " Select the eslint and vls linters.
 let b:ale_linters = ['eslint', 'vls']
 
+" doge config
+let g:doge_doc_standard_python = 'sphinx'
+
+" magit config
+let g:magit_default_fold_level = 1
 
 " colorscheme config
 if (has("termguicolors"))
@@ -87,11 +93,9 @@ let g:airline_theme='material'
 let g:material_terminal_italics = 1
 set cursorline
 
-" WhichKey config
-let g:mapleader = "\<Space>"
-let g:maplocalleader = ','
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+" mergetool config
+let g:mergetool_layout = 'mr'
+let g:mergetool_prefer_revision = 'local'
 
 " NERDTree config
 let NERDTreeShowHidden=1
@@ -165,27 +169,25 @@ command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, {'option
 
 " Mappings
 let mapleader = "\<Space>"
-nnoremap <Leader>s :wa<CR>
+nnoremap <Leader>s :Gstatus<CR>
+nnoremap <Leader>D :Gdiffsplit!<CR>
 nnoremap <Leader>o :GFiles<CR>
 nnoremap <Leader>O :Files<CR>
 nnoremap <Leader>t :Tags<CR>
 nnoremap <Leader>T :Tags <C-R><C-W><CR>
-nnoremap <Leader>b :BLines<CR>
-nnoremap <Leader>f :Ag<CR>
-nnoremap <Leader>F :Ag <C-R><C-W><CR>
+nnoremap <Leader>f :BLines<CR>
+nnoremap <Leader>g :Ag<CR>
+nnoremap <Leader>G :Ag <C-R><C-W><CR>
 nnoremap <Leader>r :Rg<CR>
 nnoremap <Leader>e :NERDTreeToggle<CR>
 nnoremap <Leader>a :NERDTreeFind<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>wq :wq<CR>
-nnoremap <Leader>g :Gstatus<CR>
 nnoremap <Leader>l :ALEFix<CR>
-nnoremap <Leader><Leader> :
-nnoremap gd <C-]>
+nnoremap <Leader><Leader> :wa<CR>
+nnoremap <Leader>b :Black<CR>
 set diffopt+=vertical
 
-nnoremap <Leader>j <C-d>
-nnoremap <Leader>k <C-u>
 nnoremap <Leader>w <C-w>
 
 nnoremap <Leader>rf :source ~/.config/nvim/init.vim<CR>

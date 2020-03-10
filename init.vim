@@ -16,6 +16,7 @@ call plug#begin('~/.config/nvim/_plugins')
   " Deoplete plugins
   Plug 'deoplete-plugins/deoplete-jedi'
   Plug 'slashmili/alchemist.vim'
+  Plug 'uplus/deoplete-solargraph'
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
   Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 
@@ -35,6 +36,7 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'mhinz/vim-grepper'
   Plug 'vim-airline/vim-airline'
   Plug 'Townk/vim-autoclose'
+  Plug 'Chiel92/vim-autoformat'
   Plug 'w0rp/ale'
   Plug 'tpope/vim-surround'
   Plug 'sheerun/vim-polyglot'
@@ -181,10 +183,15 @@ nnoremap <Leader>e :NERDTreeToggle<CR>
 nnoremap <Leader>a :NERDTreeFind<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>wq :wq<CR>
-nnoremap <Leader>l :ALEFix<CR>
 nnoremap <Leader><Leader> :wa<CR>
 nnoremap <Leader>b :Black<CR>
+noremap <Leader>l :Autoformat<CR>
 set diffopt+=vertical
+nnoremap <silent> gj :let @/ = substitute(expand('<cfile>'), '^/', '', '')
+                   \  <bar>normal gngf<cr>
+
+" Formatters
+let g:formatters_python = ['black']
 
 nnoremap <Leader>w <C-w>
 

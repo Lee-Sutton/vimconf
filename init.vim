@@ -277,12 +277,12 @@ command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, {'option
 let mapleader = "\<Space>"
 nnoremap <Leader>s :Gstatus<CR>
 nnoremap <Leader>D :Gdiffsplit!<CR>
-nnoremap <Leader>o :GFiles<CR>
+nnoremap <Leader>o :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
 nnoremap <Leader>O :Files<CR>
 nnoremap <Leader>t :Tags<CR>
 nnoremap <Leader>T :Tags <C-R><C-W><CR>
 nnoremap <Leader>f :BLines<CR>
-nnoremap <Leader>g :Ag<CR>
+nnoremap <Leader>g :call fzf#vim#ag('', fzf#vim#with_preview('right'))<CR>
 nnoremap <Leader>G :Ag <C-R><C-W><CR>
 nnoremap <Leader>r :Rg<CR>
 nnoremap <Leader>e :NERDTreeToggle<CR>

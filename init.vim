@@ -1,3 +1,5 @@
+set encoding=UTF-8
+
 call plug#begin('~/.config/nvim/_plugins')
   " Deoplete plugins
   Plug 'slashmili/alchemist.vim'
@@ -9,7 +11,6 @@ call plug#begin('~/.config/nvim/_plugins')
 
   " utility plugins
   Plug 'psliwka/vim-smoothie'
-  Plug 'Shougo/echodoc'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdtree'
@@ -24,7 +25,6 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'kkoomen/vim-doge'
-  Plug 'heavenshell/vim-jsdoc'
   Plug 'mtth/scratch.vim'
   Plug 'mindriot101/vim-yapf'
   Plug 'airblade/vim-gitgutter'
@@ -41,11 +41,16 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'liuchengxu/vista.vim'
   Plug 'pangloss/vim-javascript'
   Plug 'simonsmith/material.vim'
+  Plug 'ryanoasis/vim-devicons'
 
   " colorscheme
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
 call plug#end()
 
+set guifont=Hack\ Nerd\ Font\ Font:h11
+let g:airline_powerline_fonts = 1
+
+"""""""""""""""""""""""""""""""""""""""""""
 " LSP
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -188,6 +193,8 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " doge config
 let g:doge_doc_standard_python = 'sphinx'
 
@@ -235,19 +242,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:nvim_typescript#javascript_support = 1
 let g:nvim_typescript#vue_support = 1
 let g:nvim_typescript#type_info_on_hold = 1
-let g:javascript_plugin_jsdoc = 1
-" let g:javascript_conceal_function             = "ƒ"
-" let g:javascript_conceal_null                 = "ø"
-" let g:javascript_conceal_this                 = "@"
-" let g:javascript_conceal_return               = "⇚"
-" let g:javascript_conceal_undefined            = "¿"
-" let g:javascript_conceal_NaN                  = "ℕ"
-" let g:javascript_conceal_prototype            = "¶"
-" let g:javascript_conceal_static               = "•"
-" let g:javascript_conceal_super                = "Ω"
-" let g:javascript_conceal_arrow_function       = "⇒"
-" let g:javascript_conceal_noarg_arrow_function = "⇒"
-" let g:javascript_conceal_underscore_arrow_function = "⇒"
 
 " emmet config
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")

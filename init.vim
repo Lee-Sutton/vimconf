@@ -9,6 +9,9 @@ call plug#begin('~/.config/nvim/_plugins')
   " coc neovim
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+  " ale
+  Plug 'dense-analysis/ale'
+
   " utility plugins
   Plug 'psliwka/vim-smoothie'
   Plug 'tpope/vim-sensible'
@@ -282,7 +285,8 @@ nnoremap <Leader>O :Files<CR>
 nnoremap <Leader>t :Tags<CR>
 nnoremap <Leader>T :Tags <C-R><C-W><CR>
 nnoremap <Leader>f :BLines<CR>
-nnoremap <Leader>g :call fzf#vim#ag('', fzf#vim#with_preview('right'))<CR>
+nnoremap <Leader>g :Ag<CR>
+"nnoremap <Leader>g :call fzf#vim#ag('', fzf#vim#with_preview('right'))<CR>
 nnoremap <Leader>G :Ag <C-R><C-W><CR>
 nnoremap <Leader>r :Rg<CR>
 nnoremap <Leader>e :NERDTreeToggle<CR>
@@ -442,3 +446,60 @@ let g:vista#renderer#icons = {
 \   "function": "\uf794",
 \   "variable": "\uf71b",
 \  }
+
+
+" Terminal buffer options for fzf
+autocmd! FileType fzf
+autocmd  FileType fzf set noshowmode noruler nonu
+
+function! CreateCenteredFloatingWindow()
+    let width = min([&columns - 4, max([80, &columns - 20])])
+    let height = min([&lines - 4, max([20, &lines - 10])])
+    let top = ((&lines - height) / 2) - 1
+    let left = (&columns - width) / 2
+    let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+
+    let top = "╭" . repeat("─", width - 2) . "╮"
+    let mid = "│" . repeat(" ", width - 2) . "│"
+    let bot = "╰" . repeat("─", width - 2) . "╯"
+    let lines = [top] + repeat([mid], height - 2) + [bot]
+    let s:buf = nvim_create_buf(v:false, v:true)
+    call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+    call nvim_open_win(s:buf, v:true, opts)
+    set winhl=Normal:Floating
+    let opts.row += 1
+    let opts.height -= 2
+    let opts.col += 2
+    let opts.width -= 4
+    call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    au BufWipeout <buffer> exe 'bw '.s:buf
+endfunction
+
+let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+
+" if has('nvim') && exists('&winblend') && &termguicolors
+"   " set winblend=20
+" 
+"   hi NormalFloat guibg=None
+"   if exists('g:fzf_colors.bg')
+"     call remove(g:fzf_colors, 'bg')
+"   endif
+" 
+"   if stridx($FZF_DEFAULT_OPTS, '--border') == -1
+"     let $FZF_DEFAULT_OPTS .= ' --border'
+"   endif
+" 
+"   function! FloatingFZF()
+"     let width = float2nr(&columns * 0.8)
+"     let height = float2nr(&lines * 0.6)
+"     let opts = { 'relative': 'editor',
+"                \ 'row': (&lines - height) / 2,
+"                \ 'col': (&columns - width) / 2,
+"                \ 'width': width,
+"                \ 'height': height }
+" 
+"     call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+"   endfunction
+" 
+"   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+" endif

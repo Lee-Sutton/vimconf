@@ -13,6 +13,7 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'dense-analysis/ale'
 
   " utility plugins
+  Plug 'voldikss/vim-floaterm'
   Plug 'psliwka/vim-smoothie'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
@@ -31,8 +32,8 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'mtth/scratch.vim'
   Plug 'mindriot101/vim-yapf'
   Plug 'airblade/vim-gitgutter'
-  Plug 'posva/vim-vue'
   Plug 'SidOfc/mkdx'
+  Plug 'posva/vim-vue'
   Plug 'junegunn/goyo.vim'
   Plug 'mattn/emmet-vim'
   Plug 'SirVer/ultisnips'
@@ -52,6 +53,10 @@ call plug#end()
 
 set guifont=Hack\ Nerd\ Font\ Font:h11
 let g:airline_powerline_fonts = 1
+
+" vim-vue
+let g:vue_pre_processors = ['scss']
+let g:vue_pre_processors = 'detect_on_enter'
 
 """""""""""""""""""""""""""""""""""""""""""
 " LSP
@@ -130,8 +135,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>l  <Plug>(coc-format-selected)
+nmap <leader>l  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -143,20 +148,11 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current line.
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Introduce function text object
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
 
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
@@ -282,8 +278,8 @@ nnoremap <Leader>s :Gstatus<CR>
 nnoremap <Leader>D :Gdiffsplit!<CR>
 nnoremap <Leader>o :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
 nnoremap <Leader>O :Files<CR>
-nnoremap <Leader>t :Tags<CR>
-nnoremap <Leader>T :Tags <C-R><C-W><CR>
+nnoremap <Leader>p :Tags<CR>
+nnoremap <Leader>P :Tags <C-R><C-W><CR>
 nnoremap <Leader>f :BLines<CR>
 nnoremap <Leader>g :Ag<CR>
 "nnoremap <Leader>g :call fzf#vim#ag('', fzf#vim#with_preview('right'))<CR>
@@ -295,7 +291,9 @@ nnoremap <Leader>q :q<CR>
 nnoremap <Leader>wq :wq<CR>
 nnoremap <Leader><Leader> :wa<CR>
 nnoremap <Leader>b :Buffers<CR>
-noremap <Leader>l :Autoformat<CR>
+noremap <Leader>l :ALEFix<CR>
+noremap <Leader>L :Autoformat<CR>
+noremap <Leader>t :FloatermToggle<CR>
 set diffopt+=vertical
 nnoremap <silent> gj :let @/ = substitute(expand('<cfile>'), '^/', '', '')
                    \  <bar>normal gngf<cr>
@@ -448,6 +446,9 @@ let g:vista#renderer#icons = {
 \  }
 
 
+" float term config
+let g:floaterm_position = 'center'
+
 " Terminal buffer options for fzf
 autocmd! FileType fzf
 autocmd  FileType fzf set noshowmode noruler nonu
@@ -477,29 +478,7 @@ endfunction
 
 let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 
-" if has('nvim') && exists('&winblend') && &termguicolors
-"   " set winblend=20
-" 
-"   hi NormalFloat guibg=None
-"   if exists('g:fzf_colors.bg')
-"     call remove(g:fzf_colors, 'bg')
-"   endif
-" 
-"   if stridx($FZF_DEFAULT_OPTS, '--border') == -1
-"     let $FZF_DEFAULT_OPTS .= ' --border'
-"   endif
-" 
-"   function! FloatingFZF()
-"     let width = float2nr(&columns * 0.8)
-"     let height = float2nr(&lines * 0.6)
-"     let opts = { 'relative': 'editor',
-"                \ 'row': (&lines - height) / 2,
-"                \ 'col': (&columns - width) / 2,
-"                \ 'width': width,
-"                \ 'height': height }
-" 
-"     call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-"   endfunction
-" 
-"   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-" endif
+let g:ale_fixers = {}
+let g:ale_fixers.javascript = ['eslint']
+let g:ale_fixers.vue = ['eslint']
+let g:ale_fixers.python = ['black']

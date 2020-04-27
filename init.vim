@@ -13,12 +13,17 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'dense-analysis/ale'
 
   " utility plugins
+  Plug 'tpope/vim-commentary'
+  Plug 'pseewald/vim-anyfold'
   Plug 'voldikss/vim-floaterm'
   Plug 'psliwka/vim-smoothie'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-fugitive'
   Plug 'scrooloose/nerdtree'
   Plug '/usr/local/opt/fzf'
+  Plug 'chengzeyi/fzf-preview.vim'
+  Plug 'rbong/vim-flog'
+
   Plug 'junegunn/fzf.vim'
   Plug 'mhinz/vim-grepper'
   Plug 'vim-airline/vim-airline'
@@ -47,12 +52,20 @@ call plug#begin('~/.config/nvim/_plugins')
   Plug 'simonsmith/material.vim'
   Plug 'ryanoasis/vim-devicons'
 
+  Plug 'tpope/vim-dadbod'
+  Plug 'kristijanhusak/vim-dadbod-ui'
+
+  " Plug 'vimwiki/vimwiki'
+
   " colorscheme
   Plug 'sonph/onehalf', {'rtp': 'vim/'}
 call plug#end()
 
 set guifont=Hack\ Nerd\ Font\ Font:h11
 let g:airline_powerline_fonts = 1
+
+" vimwiki config
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
 
 " vim-vue
 let g:vue_pre_processors = ['scss']
@@ -157,8 +170,8 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+" nmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -196,9 +209,6 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " doge config
 let g:doge_doc_standard_python = 'sphinx'
-
-" magit config
-let g:magit_default_fold_level = 1
 
 " colorscheme config
 if (has("termguicolors"))
@@ -277,12 +287,11 @@ let mapleader = "\<Space>"
 nnoremap <Leader>s :Gstatus<CR>
 nnoremap <Leader>D :Gdiffsplit!<CR>
 nnoremap <Leader>o :call fzf#vim#gitfiles('', fzf#vim#with_preview('right'))<CR>
-nnoremap <Leader>O :Files<CR>
-nnoremap <Leader>p :Tags<CR>
+nnoremap <Leader>O :GFiles <C-R><C-W><CR>
+nnoremap <Leader>p :FZFTags<CR>
 nnoremap <Leader>P :Tags <C-R><C-W><CR>
 nnoremap <Leader>f :BLines<CR>
-nnoremap <Leader>g :Ag<CR>
-"nnoremap <Leader>g :call fzf#vim#ag('', fzf#vim#with_preview('right'))<CR>
+nnoremap <Leader>g :FZFAg<CR>
 nnoremap <Leader>G :Ag <C-R><C-W><CR>
 nnoremap <Leader>r :Rg<CR>
 nnoremap <Leader>e :NERDTreeToggle<CR>
@@ -294,6 +303,10 @@ nnoremap <Leader>b :Buffers<CR>
 noremap <Leader>l :ALEFix<CR>
 noremap <Leader>L :Autoformat<CR>
 noremap <Leader>t :FloatermToggle<CR>
+noremap <Return> za
+nmap <Leader>" ysiw"
+nmap <Leader>' ysiw'
+noremap <Leader><tab> za
 set diffopt+=vertical
 nnoremap <silent> gj :let @/ = substitute(expand('<cfile>'), '^/', '', '')
                    \  <bar>normal gngf<cr>
@@ -352,6 +365,9 @@ endif
 
 
 " gutengtags config
+" added for fzftags command
+let g:gutentags_ctags_extra_args = ['--excmd=number', '--tag-relative=no']
+" list of commonly excluded dirs
 let g:gutentags_ctags_exclude = [
       \ '*.git', '*.svg', '*.hg',
       \ 'build',
@@ -482,3 +498,20 @@ let g:ale_fixers = {}
 let g:ale_fixers.javascript = ['eslint']
 let g:ale_fixers.vue = ['eslint']
 let g:ale_fixers.python = ['black']
+
+"-- FOLDING --
+set foldmethod=indent
+
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+augroup END
+
+set foldlevel=99
+
+" DADBOD (databasese)
+" This is just an example. Keep this out of version control. Check for more examples below.
+let g:dbs = {
+\ 'local-meteor': 'mongodb://localhost:3001/?connectTimeoutMS=10000'
+\}
+
